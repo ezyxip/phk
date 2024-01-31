@@ -1,11 +1,12 @@
 package com.ezyxip.phk.ui.models
+import com.ezyxip.phk.ui.screens.Screen
 
 object UIModel {
     fun getMenuItems(): List<MenuItem> {
         return listOf(
-            MenuItem("Курсы"),
-            MenuItem(),
-            MenuItem()
+            MenuItem("Главная"),
+            MenuItem("Курсы", route = Screen.CourseList),
+            MenuItem("Помощь", route = Screen.Default)
         )
     }
 

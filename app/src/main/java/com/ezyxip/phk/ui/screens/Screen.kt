@@ -17,8 +17,10 @@ enum class Screen (
     Main("/main", screenContent = {
                                   _, navigator ->MainScreen(navigator = navigator)
     }),
-    Courses("/course", listOf("courseId"), screenContent = {_, _ -> Text("Course page")}),
-    LessonEdit("/lesson", listOf("lessonId"), screenContent = {_, _ -> Text("Lesson page")});
+    CourseEdit("/course", listOf("courseId"), screenContent = { _, _ -> Text("Course page")}),
+    LessonEdit("/lesson", listOf("lessonId"), screenContent = {_, _ -> Text("Lesson page")}),
+    CourseList("/courseList", screenContent = {_, _ -> Text(text = "Course list page") }),
+    Default("/default", screenContent = {_, _ -> Text(text = "DefaultPage")});
 
     val path: String
         get(){
@@ -33,7 +35,7 @@ enum class Screen (
     fun pathWithArg(vararg argValue: String): String {
         var res = _path
         try {
-            for(i in 0..<arguments.size){
+            for(i in arguments.indices){
                 res += "/${argValue[i]}"
             }
         } catch (e: Exception){

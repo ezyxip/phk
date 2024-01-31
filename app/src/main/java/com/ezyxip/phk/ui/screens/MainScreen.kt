@@ -1,5 +1,6 @@
 package com.ezyxip.phk.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,8 @@ fun MainScreen(
     navigator: NavHostController
 ){
     MenuableScreen (
-        modifier = modifier
+        modifier = modifier,
+        navigate = {navigator.navigate(it.path)}
     ){
         Column(
             modifier = modifier,
@@ -40,14 +42,17 @@ fun MainScreen(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold
             )
-            LastLessonList(modifier)
+            LastLessonList(modifier, onCardClick = {
+                navigator.navigate(Screen.LessonEdit.pathWithArg(it.toString()))
+            })
         }
     }
 }
 
 @Composable
 private fun LastLessonList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClick: (Int) -> Unit = {}
 ){
     val lastLessons = UIModel.getLastLessons()
     LazyColumn (
@@ -56,7 +61,7 @@ private fun LastLessonList(
         verticalArrangement = Arrangement.Center
     ) {
         items(lastLessons){
-            LessonCard(modifier, it)
+            LessonCard(modifier, it, onClick = {onCardClick(it.id)})
         }
     }
 }
@@ -64,11 +69,13 @@ private fun LastLessonList(
 @Composable
 fun LessonCard(
     modifier: Modifier = Modifier,
-    lesson: LessonPresentation = LessonPresentation()
+    lesson: LessonPresentation = LessonPresentation(),
+    onClick: () -> Unit = {}
 ){
     ElevatedCard (
         modifier = modifier
-            .padding(15.dp),
+            .padding(15.dp)
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(6.dp)
     ) {
         Column (

@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ezyxip.phk.ui.models.MenuItem
 import com.ezyxip.phk.ui.models.UIModel
+import com.ezyxip.phk.ui.screens.Screen
 
 @Composable
 fun Menu(
     modifier: Modifier = Modifier,
-    items: List<MenuItem> = listOf(MenuItem())
+    items: List<MenuItem> = listOf(MenuItem()),
+    navigate: (Screen) -> Unit = {}
 ){
     ModalDrawerSheet (
         modifier = modifier.fillMaxWidth(0.6f)
@@ -24,7 +26,7 @@ fun Menu(
                 icon = {Icon(imageVector = i.icon, contentDescription = null)},
                 label = { Text(text = i.name) },
                 selected = false,
-                onClick = i.navigate
+                onClick = {navigate(i.route)}
             )
         }
     }

@@ -25,11 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ezyxip.phk.ui.models.UIModel
+import com.ezyxip.phk.ui.screens.Screen
 import kotlinx.coroutines.launch
 
 @Composable
 fun MenuableScreen(
     modifier: Modifier = Modifier,
+    navigate: (Screen) -> Unit = {},
     content: @Composable () -> Unit
 ){
     val drawerController = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -38,7 +40,7 @@ fun MenuableScreen(
     ModalNavigationDrawer(
         modifier = modifier,
         drawerContent = {
-            Menu(modifier = modifier, items = menuItems)
+            Menu(modifier = modifier, items = menuItems, navigate = navigate)
         },
         drawerState = drawerController
     ) {
