@@ -14,13 +14,27 @@ enum class Screen (
     ) -> Unit = { _, _ -> Text(text = _path) }
 ) {
 
-    Main("/main", screenContent = {
-                                  _, navigator ->MainScreen(navigator = navigator)
-    }),
-    CourseEdit("/course", listOf("courseId"), screenContent = { _, _ -> Text("Course page")}),
-    LessonEdit("/lesson", listOf("lessonId"), screenContent = {_, _ -> Text("Lesson page")}),
-    CourseList("/courseList", screenContent = {_, _ -> Text(text = "Course list page") }),
-    Default("/default", screenContent = {_, _ -> Text(text = "DefaultPage")});
+    Main(
+        "/main",
+        screenContent = { _, navigator ->MainScreen(navigator = navigator) }),
+    CourseEdit(
+        "/course",
+        listOf("courseId"),
+        screenContent = { _, _ -> Text("Course page") }
+    ),
+    LessonEdit(
+        "/lesson",
+        listOf("lessonId"),
+        screenContent = { _, _ -> Text("Lesson page") }
+    ),
+    CourseList(
+        "/courseList",
+        screenContent = { _, navigator -> CourseLIstScreen(navigator = navigator) }
+    ),
+    Default(
+        "/default",
+        screenContent = { _, _ -> Text(text = "DefaultPage") }
+    );
 
     val path: String
         get(){

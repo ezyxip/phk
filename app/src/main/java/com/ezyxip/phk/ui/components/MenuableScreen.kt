@@ -1,9 +1,11 @@
 package com.ezyxip.phk.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -23,6 +25,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ezyxip.phk.ui.models.UIModel
 import com.ezyxip.phk.ui.screens.Screen
@@ -32,6 +35,7 @@ import kotlinx.coroutines.launch
 fun MenuableScreen(
     modifier: Modifier = Modifier,
     navigate: (Screen) -> Unit = {},
+    rightButton: @Composable ()->Unit = {},
     content: @Composable () -> Unit
 ){
     val drawerController = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -47,7 +51,8 @@ fun MenuableScreen(
         MenuableBody(
             modifier = modifier,
             drawerController = drawerController,
-            content = content
+            content = content,
+            rightButton = rightButton
         )
     }
 }
@@ -56,11 +61,14 @@ fun MenuableScreen(
 private fun MenuableBody(
     modifier: Modifier = Modifier,
     drawerController : DrawerState,
+    rightButton: @Composable ()->Unit = {},
     content: @Composable () -> Unit
 ){
     Scaffold(
         modifier = modifier,
-        topBar = { PhKTopAppBar(drawerController = drawerController)}
+        topBar = {
+            PhKTopAppBar(drawerController = drawerController, rightButton = rightButton)
+        }
     ) { paddingValues ->
         Box(
             modifier = modifier.padding(paddingValues)
@@ -74,10 +82,17 @@ private fun MenuableBody(
 @Composable
 private fun PhKTopAppBar(
     modifier: Modifier = Modifier,
-    drawerController : DrawerState,
+    drawerController : DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    rightButton: @Composable ()->Unit = {}
 ){
     TopAppBar(
-        title = { PhKTopMenuBarTitle(modifier = modifier, drawerController = drawerController)},
+        title = {
+            PhKTopMenuBarTitle(
+                modifier = modifier,
+                drawerController = drawerController,
+                rightButton = rightButton
+            )
+        },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = Color.White
@@ -85,20 +100,34 @@ private fun PhKTopAppBar(
     )
 }
 
+@Preview
+@Composable
+fun PhKTopAppBarPreview(){
+    PhKTopAppBar(rightButton = {Text("123")})
+}
+
 @Composable
 private fun PhKTopMenuBarTitle(
     modifier: Modifier = Modifier,
-    drawerController : DrawerState
+    drawerController : DrawerState,
+    rightButton: @Composable ()->Unit = {}
 ){
-    Row(
-        modifier = modifier,
+    Row (
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        MenuButton(drawerController = drawerController)
-        Spacer(
-            modifier.padding(10.dp)
-        )
-        Text("Фотоконспект")
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            MenuButton(drawerController = drawerController)
+            Spacer(
+                modifier.padding(10.dp)
+            )
+            Text("Фотоконспект")
+        }
+        rightButton()
     }
 }
 
