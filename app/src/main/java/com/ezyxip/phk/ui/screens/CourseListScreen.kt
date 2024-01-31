@@ -29,7 +29,13 @@ fun CourseLIstScreen(
     MenuableScreen (
         modifier = modifier,
         navigate = {navigator.navigate(it.path)},
-        rightButton = { AddButton() }
+        rightButton = {
+            AddButton{
+                navigator.navigate(
+                    Screen.CourseEdit.pathWithArg("0")
+                )
+            }
+        }
     ){
         Column {
             CourseList(
