@@ -20,7 +20,7 @@ enum class Screen (
     CourseEdit(
         "/course",
         listOf("courseId"),
-        screenContent = { _, _ -> Text("Course page") }
+        screenContent = { args, nav -> CourseEditScreen(args = args, navigator = nav) }
     ),
     LessonEdit(
         "/lesson",

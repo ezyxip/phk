@@ -4,19 +4,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.ezyxip.phk.ui.components.AddButton
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.UIModel
@@ -28,6 +25,7 @@ fun CourseLIstScreen(
 ){
     MenuableScreen (
         modifier = modifier,
+        title = "Курсы",
         navigate = {navigator.navigate(it.path)},
         rightButton = {
             AddButton{
@@ -48,22 +46,6 @@ fun CourseLIstScreen(
             )
         }
     }
-}
-
-@Composable
-fun AddButton(
-    modifier: Modifier = Modifier,
-    tint: Color = Color.White,
-    onClick: () -> Unit = {}
-){
-    Icon(
-        modifier = modifier
-            .clickable { onClick() }
-            .padding(10.dp, 0.dp),
-        imageVector = Icons.Filled.Add,
-        contentDescription = null,
-        tint = tint
-    )
 }
 
 @Composable

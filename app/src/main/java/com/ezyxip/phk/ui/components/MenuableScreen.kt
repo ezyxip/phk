@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MenuableScreen(
     modifier: Modifier = Modifier,
+    title: String = "Фотоконспект",
     navigate: (Screen) -> Unit = {},
     rightButton: @Composable ()->Unit = {},
     content: @Composable () -> Unit
@@ -50,6 +51,7 @@ fun MenuableScreen(
     ) {
         MenuableBody(
             modifier = modifier,
+            title = title,
             drawerController = drawerController,
             content = content,
             rightButton = rightButton
@@ -60,6 +62,7 @@ fun MenuableScreen(
 @Composable
 private fun MenuableBody(
     modifier: Modifier = Modifier,
+    title: String,
     drawerController : DrawerState,
     rightButton: @Composable ()->Unit = {},
     content: @Composable () -> Unit
@@ -67,7 +70,10 @@ private fun MenuableBody(
     Scaffold(
         modifier = modifier,
         topBar = {
-            PhKTopAppBar(drawerController = drawerController, rightButton = rightButton)
+            PhKTopAppBar(
+                drawerController = drawerController,
+                title = title,
+                rightButton = rightButton)
         }
     ) { paddingValues ->
         Box(
@@ -82,6 +88,7 @@ private fun MenuableBody(
 @Composable
 private fun PhKTopAppBar(
     modifier: Modifier = Modifier,
+    title: String,
     drawerController : DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     rightButton: @Composable ()->Unit = {}
 ){
@@ -89,6 +96,7 @@ private fun PhKTopAppBar(
         title = {
             PhKTopMenuBarTitle(
                 modifier = modifier,
+                title = title,
                 drawerController = drawerController,
                 rightButton = rightButton
             )
@@ -103,12 +111,16 @@ private fun PhKTopAppBar(
 @Preview
 @Composable
 fun PhKTopAppBarPreview(){
-    PhKTopAppBar(rightButton = {Text("123")})
+    PhKTopAppBar(
+        title = "Фотоконспект",
+        rightButton = {Text("123")}
+    )
 }
 
 @Composable
 private fun PhKTopMenuBarTitle(
     modifier: Modifier = Modifier,
+    title: String,
     drawerController : DrawerState,
     rightButton: @Composable ()->Unit = {}
 ){
@@ -125,7 +137,7 @@ private fun PhKTopMenuBarTitle(
             Spacer(
                 modifier.padding(10.dp)
             )
-            Text("Фотоконспект")
+            Text(title)
         }
         rightButton()
     }
