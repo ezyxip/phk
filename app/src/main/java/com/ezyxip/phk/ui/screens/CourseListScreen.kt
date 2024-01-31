@@ -33,7 +33,12 @@ fun CourseLIstScreen(
     ){
         Column {
             CourseList(
-                courses = UIModel.getCourses()
+                courses = UIModel.getCourses(),
+                onCardClick = {
+                    navigator.navigate(
+                        Screen.CourseEdit.pathWithArg(it.toString())
+                    )
+                }
             )
         }
     }
@@ -58,13 +63,15 @@ fun AddButton(
 @Composable
 fun CourseList(
     modifier: Modifier = Modifier,
-    courses: List<CoursePresentation> = listOf()
+    courses: List<CoursePresentation> = listOf(),
+    onCardClick: (Int) -> Unit = {}
 ){
     Column {
         for (course in courses){
             CourseCard(
                 modifier = modifier,
-                course = course
+                course = course,
+                onClick = {onCardClick(course.id)}
             )
         }
     }
@@ -73,12 +80,14 @@ fun CourseList(
 @Composable
 fun CourseCard(
     modifier: Modifier = Modifier,
-    course: CoursePresentation = CoursePresentation()
+    course: CoursePresentation = CoursePresentation(),
+    onClick: () -> Unit = {}
 ){
     Card (
         modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(6.dp)
     ){
         Text(
