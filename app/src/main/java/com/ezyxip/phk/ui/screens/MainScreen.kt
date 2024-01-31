@@ -10,9 +10,9 @@ import com.ezyxip.phk.ui.components.MenuableScreen
 fun MainScreen(
     modifier: Modifier = Modifier,
 ){
-
-
-    MenuableScreen {
+    MenuableScreen (
+        modifier = modifier
+    ){
         Column(
             modifier = modifier
         ) {

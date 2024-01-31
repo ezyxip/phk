@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,61 +27,95 @@ import androidx.compose.ui.unit.dp
 import com.ezyxip.phk.ui.models.UIModel
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuableScreen(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ){
     val drawerController = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
     val menuItems = UIModel.getMenuItems()
 
     ModalNavigationDrawer(
-        drawerContent = { Menu(items = menuItems) },
+        modifier = modifier,
+        drawerContent = {
+            Menu(modifier = modifier, items = menuItems)
+        },
         drawerState = drawerController
     ) {
-        Scaffold(
+        MenuableBody(
             modifier = modifier,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Row(
-                            modifier = modifier,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+            drawerController = drawerController,
+            content = content
+        )
+    }
+}
 
-                            Icon(
-                                modifier = modifier.clickable {
-                                    scope.launch {
-                                        drawerController.apply {
-                                            if(isClosed) open() else close()
-                                        }
-                                    }
-                                },
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = "menu icon",
-                                tint = Color.White
-                            )
-                            Spacer(
-                                modifier.padding(10.dp)
-                            )
-                            Text("Фотоконспект")
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = Color.White
-                    )
-                )
-            }
-        ) { paddingValues ->
-            Box(
-                modifier = modifier.padding(paddingValues)
-            ) {
-                content()
-            }
+@Composable
+private fun MenuableBody(
+    modifier: Modifier = Modifier,
+    drawerController : DrawerState,
+    content: @Composable () -> Unit
+){
+    Scaffold(
+        modifier = modifier,
+        topBar = { PhKTopAppBar(drawerController = drawerController)}
+    ) { paddingValues ->
+        Box(
+            modifier = modifier.padding(paddingValues)
+        ) {
+            content()
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun PhKTopAppBar(
+    modifier: Modifier = Modifier,
+    drawerController : DrawerState,
+){
+    TopAppBar(
+        title = { PhKTopMenuBarTitle(modifier = modifier, drawerController = drawerController)},
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = Color.White
+        )
+    )
+}
+
+@Composable
+private fun PhKTopMenuBarTitle(
+    modifier: Modifier = Modifier,
+    drawerController : DrawerState
+){
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        MenuButton(drawerController = drawerController)
+        Spacer(
+            modifier.padding(10.dp)
+        )
+        Text("Фотоконспект")
+    }
+}
+
+@Composable
+private fun MenuButton(
+    modifier: Modifier = Modifier,
+    drawerController : DrawerState
+){
+    val scope = rememberCoroutineScope()
+    Icon(
+        modifier = modifier.clickable {
+            scope.launch {
+                drawerController.apply {
+                    if(isClosed) open() else close()
+                }
+            }
+        },
+        imageVector = Icons.Filled.Menu,
+        contentDescription = "menu icon",
+        tint = Color.White
+    )
 }
