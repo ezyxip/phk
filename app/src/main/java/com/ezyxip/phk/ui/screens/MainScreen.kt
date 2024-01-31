@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.LessonPresentation
 import com.ezyxip.phk.ui.models.UIModel
@@ -24,6 +25,7 @@ import com.ezyxip.phk.ui.models.UIModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    navigator: NavHostController
 ){
     MenuableScreen (
         modifier = modifier
