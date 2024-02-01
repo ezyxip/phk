@@ -16,12 +16,12 @@ import androidx.navigation.NavHostController
 import com.ezyxip.phk.ui.components.AddButton
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.CoursePresentation
-import com.ezyxip.phk.ui.models.UIModel
 
 @Composable
-fun CourseLIstScreen(
+fun CourseListScreen(
     modifier: Modifier = Modifier,
-    navigator: NavHostController
+    navigator: NavHostController,
+    getCourseList: () -> List<CoursePresentation>
 ){
     MenuableScreen (
         modifier = modifier,
@@ -37,7 +37,7 @@ fun CourseLIstScreen(
     ){
         Column {
             CourseList(
-                courses = UIModel.getCourses(),
+                courses = getCourseList(),
                 onCardClick = {
                     navigator.navigate(
                         ScreenHub.CourseEdit.pathWithArg(it.toString())
