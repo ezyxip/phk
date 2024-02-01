@@ -30,7 +30,7 @@ fun CourseLIstScreen(
         rightButton = {
             AddButton{
                 navigator.navigate(
-                    Screen.CourseEdit.pathWithArg("0")
+                    ScreenHub.CourseEdit.pathWithArg("0")
                 )
             }
         }
@@ -40,7 +40,7 @@ fun CourseLIstScreen(
                 courses = UIModel.getCourses(),
                 onCardClick = {
                     navigator.navigate(
-                        Screen.CourseEdit.pathWithArg(it.toString())
+                        ScreenHub.CourseEdit.pathWithArg(it.toString())
                     )
                 }
             )

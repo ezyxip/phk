@@ -20,7 +20,7 @@ fun CourseEditScreen(
             AddButton(
                 modifier = modifier,
                 onClick = {
-                    navigator.navigate(Screen.LessonEdit.pathWithArg("0"))
+                    navigator.navigate(ScreenHub.LessonEdit.pathWithArg("0"))
                 }
             )}
     ) {

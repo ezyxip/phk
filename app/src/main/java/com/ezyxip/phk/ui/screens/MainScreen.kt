@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.LessonPresentation
-import com.ezyxip.phk.ui.models.UIModel
+
+const val COUNT_OF_LESSONS_ON_MAIN_SCREEN = 10
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navigator: NavHostController
+    navigator: NavHostController,
+    getLastLessons: (Int) -> List<LessonPresentation>
 ){
     MenuableScreen (
         modifier = modifier,
@@ -42,9 +44,13 @@ fun MainScreen(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold
             )
-            LastLessonList(modifier, onCardClick = {
-                navigator.navigate(Screen.LessonEdit.pathWithArg(it.toString()))
-            })
+            LastLessonList(
+                modifier,
+                onCardClick = {
+                    navigator.navigate(ScreenHub.LessonEdit.pathWithArg(it.toString()))
+                },
+                getLastLessons = getLastLessons
+            )
         }
     }
 }
@@ -52,9 +58,10 @@ fun MainScreen(
 @Composable
 private fun LastLessonList(
     modifier: Modifier = Modifier,
-    onCardClick: (Int) -> Unit = {}
+    onCardClick: (Int) -> Unit = {},
+    getLastLessons: (Int) -> List<LessonPresentation>
 ){
-    val lastLessons = UIModel.getLastLessons()
+    val lastLessons = getLastLessons(COUNT_OF_LESSONS_ON_MAIN_SCREEN)
     LazyColumn (
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

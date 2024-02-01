@@ -3,39 +3,15 @@ package com.ezyxip.phk.ui.screens
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import kotlin.Exception
 
-enum class Screen (
+class Screen (
     private val _path: String,
     val arguments: List<String> = listOf(),
     val screenContent: @Composable (
         Map<String, String?>,
         NavHostController
     ) -> Unit = { _, _ -> Text(text = _path) }
-) {
-
-    Main(
-        "/main",
-        screenContent = { _, navigator ->MainScreen(navigator = navigator) }),
-    CourseEdit(
-        "/course",
-        listOf("courseId"),
-        screenContent = { args, nav -> CourseEditScreen(args = args, navigator = nav) }
-    ),
-    LessonEdit(
-        "/lesson",
-        listOf("lessonId"),
-        screenContent = { _, _ -> Text("Lesson page") }
-    ),
-    CourseList(
-        "/courseList",
-        screenContent = { _, navigator -> CourseLIstScreen(navigator = navigator) }
-    ),
-    Default(
-        "/default",
-        screenContent = { _, _ -> Text(text = "DefaultPage") }
-    );
-
+){
     val path: String
         get(){
             var res = _path

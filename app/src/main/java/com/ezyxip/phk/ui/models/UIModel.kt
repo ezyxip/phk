@@ -1,5 +1,5 @@
 package com.ezyxip.phk.ui.models
-import com.ezyxip.phk.ui.screens.Screen
+import com.ezyxip.phk.ui.screens.ScreenHub
 
 object UIModel {
     fun getCourses(): List<CoursePresentation>{
@@ -13,8 +13,8 @@ object UIModel {
     fun getMenuItems(): List<MenuItem> {
         return listOf(
             MenuItem("Главная"),
-            MenuItem("Курсы", route = Screen.CourseList),
-            MenuItem("Помощь", route = Screen.Default)
+            MenuItem("Курсы", route = ScreenHub.CourseList),
+            MenuItem("Помощь", route = ScreenHub.Default)
         )
     }
 
