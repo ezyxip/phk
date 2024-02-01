@@ -85,6 +85,15 @@ class InMemoryDataSource : DataAdapter {
         return lessons.lastIndex
     }
 
+    override fun changeCourseName(courseId: Int, newName: String) {
+        val targetCourse = courses.find { e -> e.id == courseId }
+        if(targetCourse != null){
+            targetCourse.name = newName
+        }else{
+            throw Exception("Невозможно поменять имя курса, так как такого курса не существует")
+        }
+    }
+
     private fun getCourseEntityById(id: Int): Course{
         return courses.first { e -> e.id == id }
     }

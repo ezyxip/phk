@@ -10,4 +10,5 @@ interface DataAdapter {
     fun getCourseList(): List<CoursePresentation>
     fun addNewCourse(): Int
     fun addNewLesson(courseId: Int): Int
+    fun changeCourseName(courseId: Int, newName: String)
 }

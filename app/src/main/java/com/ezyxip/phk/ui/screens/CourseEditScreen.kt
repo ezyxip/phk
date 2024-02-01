@@ -29,7 +29,8 @@ fun CourseEditScreen(
     navigator: NavHostController,
     getCourseById: (Int) -> CoursePresentation,
     getLessonsByCourseId: (Int) -> List<LessonPresentation>,
-    addNewLesson: (Int) -> Int
+    addNewLesson: (Int) -> Int,
+    changeCourseName: (Int, String) -> Unit
 ){
     val courseId = args[ScreenHub.CourseEdit.arguments[0]]
     if(courseId == null){
@@ -59,7 +60,8 @@ fun CourseEditScreen(
                 navigator.navigate(
                     ScreenHub.LessonEdit.pathWithArg(it.toString())
                 )
-            }
+            },
+            changeCourseName = changeCourseName
         )
     }
 }
@@ -69,7 +71,8 @@ private fun CourseEditBody(
     modifier: Modifier = Modifier,
     course: CoursePresentation,
     getLessonsByCourseId: (Int) -> List<LessonPresentation>,
-    toLessonEdit: (Int) -> Unit
+    toLessonEdit: (Int) -> Unit,
+    changeCourseName: (Int, String) -> Unit
 ){
     Column (
         modifier = modifier
@@ -81,7 +84,10 @@ private fun CourseEditBody(
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
             value = courseTitle,
-            onValueChange = {courseTitle = it}
+            onValueChange = {
+                changeCourseName(course.id, it)
+                courseTitle = it
+            }
         )
         LazyColumn(
             modifier = modifier.fillMaxWidth()
@@ -106,6 +112,7 @@ fun CourseEditBodyPreview(){
         getLessonsByCourseId = { listOf(
             LessonPresentation(),
         ) },
-        toLessonEdit = {}
+        toLessonEdit = {},
+        changeCourseName = {_,_ ->}
     )
 }
