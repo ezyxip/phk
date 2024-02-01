@@ -21,7 +21,8 @@ import com.ezyxip.phk.ui.models.CoursePresentation
 fun CourseListScreen(
     modifier: Modifier = Modifier,
     navigator: NavHostController,
-    getCourseList: () -> List<CoursePresentation>
+    getCourseList: () -> List<CoursePresentation>,
+    addNewCourse: () -> Int
 ){
     MenuableScreen (
         modifier = modifier,
@@ -29,8 +30,9 @@ fun CourseListScreen(
         navigate = {navigator.navigate(it.path)},
         rightButton = {
             AddButton{
+                val id = addNewCourse()
                 navigator.navigate(
-                    ScreenHub.CourseEdit.pathWithArg("0")
+                    ScreenHub.CourseEdit.pathWithArg(id.toString())
                 )
             }
         }

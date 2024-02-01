@@ -8,4 +8,6 @@ interface DataAdapter {
     fun getCourseById(id: Int): CoursePresentation
     fun getLessonsByCourseId(courseId: Int): List<LessonPresentation>
     fun getCourseList(): List<CoursePresentation>
+    fun addNewCourse(): Int
+    fun addNewLesson(courseId: Int): Int
 }

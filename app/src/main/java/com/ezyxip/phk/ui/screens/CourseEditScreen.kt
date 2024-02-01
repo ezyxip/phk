@@ -29,11 +29,14 @@ fun CourseEditScreen(
     navigator: NavHostController,
     getCourseById: (Int) -> CoursePresentation,
     getLessonsByCourseId: (Int) -> List<LessonPresentation>,
+    addNewLesson: (Int) -> Int
 ){
     val courseId = args[ScreenHub.CourseEdit.arguments[0]]
     if(courseId == null){
         throw Exception("Не найден courseId")
     }
+
+    val course = getCourseById(courseId.toInt())
 
     MenuableScreen (
         modifier = modifier,
@@ -43,13 +46,14 @@ fun CourseEditScreen(
             AddButton(
                 modifier = modifier,
                 onClick = {
-                    navigator.navigate(ScreenHub.LessonEdit.pathWithArg("0"))
+                    val id = addNewLesson(course.id)
+                    navigator.navigate(ScreenHub.LessonEdit.pathWithArg(id.toString()))
                 }
             )}
     ) {
         CourseEditBody(
             modifier = modifier,
-            course = getCourseById(courseId.toInt()),
+            course = course,
             getLessonsByCourseId = getLessonsByCourseId,
             toLessonEdit = {
                 navigator.navigate(

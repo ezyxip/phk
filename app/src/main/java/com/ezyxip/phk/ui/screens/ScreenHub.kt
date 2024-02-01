@@ -2,6 +2,7 @@ package com.ezyxip.phk.ui.screens
 
 import androidx.compose.material3.Text
 import com.ezyxip.phk.data.DataAdapter
+import com.ezyxip.phk.data.inmemory.InMemoryDataSource
 import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.LessonPresentation
 
@@ -9,7 +10,7 @@ object ScreenHub {
 
 //    private val logger = ScreenHub::class.qualifiedName?.let { Logger.getLogger(it) }!!
 
-    var dataSource: DataAdapter = DefaultDataSource()
+    var dataSource: DataAdapter = InMemoryDataSource()
 
     val Main = Screen(
     "/main",
@@ -31,7 +32,8 @@ object ScreenHub {
                 args = args,
                 navigator = nav,
                 getCourseById = dataSource::getCourseById,
-                getLessonsByCourseId = dataSource::getLessonsByCourseId
+                getLessonsByCourseId = dataSource::getLessonsByCourseId,
+                addNewLesson = dataSource::addNewLesson
             )
         }
     )
@@ -48,7 +50,8 @@ object ScreenHub {
             _, navigator ->
             CourseListScreen(
                 navigator = navigator,
-                getCourseList = dataSource::getCourseList
+                getCourseList = dataSource::getCourseList,
+                addNewCourse = dataSource::addNewCourse
             )
         }
     )
@@ -60,7 +63,6 @@ object ScreenHub {
 
     val entries: List<Screen>
     init{
-
         val res = mutableListOf<Screen>()
         val a = this::class
         for (i in a.members){
@@ -99,4 +101,8 @@ private class DefaultDataSource: DataAdapter{
             CoursePresentation(name = "Практика речевой деятельности"),
         )
     }
+
+    override fun addNewCourse() = 0
+    override fun addNewLesson(courseId: Int) = 0
+
 }
