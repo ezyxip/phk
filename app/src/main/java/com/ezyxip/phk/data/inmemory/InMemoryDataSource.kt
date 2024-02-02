@@ -32,13 +32,14 @@ class InMemoryDataSource : DataAdapter {
     )
     override fun getLastLessonList(count: Int): List<LessonPresentation> {
         return lessons
+            .reversed()
             .subList(0, count)
             .map { e -> LessonPresentation(
-            id = e.id,
-            title = e.title,
-            date = e.date.toString(),
-            course = e.course.name
-        ) }.reversed()
+                id = e.id,
+                title = e.title,
+                date = e.date.toString(),
+                course = e.course.name
+            ) }
             .toList()
     }
 
