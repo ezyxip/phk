@@ -11,4 +11,5 @@ interface DataAdapter {
     fun addNewCourse(): Int
     fun addNewLesson(courseId: Int): Int
     fun changeCourseName(courseId: Int, newName: String)
+    fun deleteCourse(courseId: Int)
 }

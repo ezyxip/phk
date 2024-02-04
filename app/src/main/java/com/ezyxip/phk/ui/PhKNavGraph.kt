@@ -17,7 +17,6 @@ fun getNavGraph(navController: NavHostController): NavGraph {
             ){
                 val args = mutableMapOf<String, String?>()
                 i.arguments.forEach { elem -> args[elem] = it.arguments?.getString(elem) }
-
                 i.screenContent(args, navController)
             }
         }

@@ -72,7 +72,7 @@ class InMemoryDataSource : DataAdapter {
     override fun addNewCourse(): Int {
         courses.add(Course("Новый курс"))
 
-        return courses.lastIndex
+        return courses.last().id
     }
 
     override fun addNewLesson(courseId: Int): Int {
@@ -93,6 +93,11 @@ class InMemoryDataSource : DataAdapter {
         }else{
             throw Exception("Невозможно поменять имя курса, так как такого курса не существует")
         }
+    }
+
+    override fun deleteCourse(courseId: Int) {
+        val targetCourse = courses.find { e -> e.id == courseId } ?: return
+        courses.remove(targetCourse)
     }
 
     private fun getCourseEntityById(id: Int): Course{

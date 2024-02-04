@@ -5,6 +5,7 @@ import com.ezyxip.phk.data.DataAdapter
 import com.ezyxip.phk.data.inmemory.InMemoryDataSource
 import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.LessonPresentation
+import com.ezyxip.phk.ui.screens.courselist.CourseListScreen
 
 object ScreenHub {
 
@@ -52,7 +53,8 @@ object ScreenHub {
             CourseListScreen(
                 navigator = navigator,
                 getCourseList = dataSource::getCourseList,
-                addNewCourse = dataSource::addNewCourse
+                addNewCourse = dataSource::addNewCourse,
+                deleteCourse = dataSource::deleteCourse
             )
         }
     )
@@ -106,4 +108,5 @@ private class DefaultDataSource: DataAdapter{
     override fun addNewCourse() = 0
     override fun addNewLesson(courseId: Int) = 0
     override fun changeCourseName(courseId: Int, newName: String) = Unit
+    override fun deleteCourse(courseId: Int){}
 }
