@@ -5,13 +5,15 @@ import com.ezyxip.phk.data.DataAdapter
 import com.ezyxip.phk.data.inmemory.InMemoryDataSource
 import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.LessonPresentation
+import com.ezyxip.phk.ui.screens.courseedit.CourseEditScreen
 import com.ezyxip.phk.ui.screens.courselist.CourseListScreen
+import com.ezyxip.phk.ui.screens.main.MainScreen
 
 object ScreenHub {
 
 //    private val logger = ScreenHub::class.qualifiedName?.let { Logger.getLogger(it) }!!
 
-    var dataSource: DataAdapter = InMemoryDataSource()
+    private var dataSource: DataAdapter = InMemoryDataSource()
 
     val Main = Screen(
     "/main",

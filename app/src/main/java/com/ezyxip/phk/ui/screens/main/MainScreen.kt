@@ -1,4 +1,4 @@
-package com.ezyxip.phk.ui.screens
+package com.ezyxip.phk.ui.screens.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import com.ezyxip.phk.ui.components.LessonCard
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.LessonPresentation
+import com.ezyxip.phk.ui.screens.ScreenHub
 
 const val COUNT_OF_LESSONS_ON_MAIN_SCREEN = 10
 

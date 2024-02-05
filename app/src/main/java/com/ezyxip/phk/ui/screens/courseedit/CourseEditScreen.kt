@@ -1,4 +1,4 @@
-package com.ezyxip.phk.ui.screens
+package com.ezyxip.phk.ui.screens.courseedit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +21,7 @@ import com.ezyxip.phk.ui.components.LessonCard
 import com.ezyxip.phk.ui.components.MenuableScreen
 import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.LessonPresentation
+import com.ezyxip.phk.ui.screens.ScreenHub
 
 @Composable
 fun CourseEditScreen(
@@ -32,10 +33,7 @@ fun CourseEditScreen(
     addNewLesson: (Int) -> Int,
     changeCourseName: (Int, String) -> Unit
 ){
-    val courseId = args[ScreenHub.CourseEdit.arguments[0]]
-    if(courseId == null){
-        throw Exception("Не найден courseId")
-    }
+    val courseId = args[ScreenHub.CourseEdit.arguments[0]] ?: throw Exception("Не найден courseId")
 
     val course = getCourseById(courseId.toInt())
 
