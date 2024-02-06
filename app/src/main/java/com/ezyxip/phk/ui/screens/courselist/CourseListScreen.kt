@@ -40,7 +40,13 @@ fun CourseListScreen(
         navigateToEditScreen = {
             id -> navigator.navigate(ScreenHub.CourseEdit.pathWithArg(id.toString()))
         },
-        selectCourse = {id -> courseDelList += id},
+        selectCourse = {
+            id ->
+            if (courseDelList.contains(id))
+                courseDelList = courseDelList.filter { e -> e != id }
+            else
+                courseDelList += id
+        },
         addNewCourse = addNewCourse,
         deleteCourses = {
             courseDelList.forEach {e -> deleteCourse(e)}
