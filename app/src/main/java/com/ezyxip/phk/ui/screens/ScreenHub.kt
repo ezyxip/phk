@@ -7,6 +7,7 @@ import com.ezyxip.phk.ui.models.CoursePresentation
 import com.ezyxip.phk.ui.models.LessonPresentation
 import com.ezyxip.phk.ui.screens.courseedit.CourseEditScreen
 import com.ezyxip.phk.ui.screens.courselist.CourseListScreen
+import com.ezyxip.phk.ui.screens.lessonedit.LessonEditScreen
 import com.ezyxip.phk.ui.screens.main.MainScreen
 
 object ScreenHub {
@@ -38,7 +39,7 @@ object ScreenHub {
                 getLessonsByCourseId = dataSource::getLessonsByCourseId,
                 addNewLesson = dataSource::addNewLesson,
                 changeCourseName = dataSource::changeCourseName,
-                deleteLesson = dataSource::deleteLessson
+                deleteLesson = dataSource::deleteLesson
             )
         }
     )
@@ -46,7 +47,14 @@ object ScreenHub {
     val LessonEdit = Screen(
     "/lesson",
     listOf("lessonId"),
-    screenContent = { _, _ -> Text("Lesson page") }
+    screenContent = {
+        args, nav ->
+        LessonEditScreen(
+            args = args,
+            navigator = nav,
+            getLessonById = dataSource::getLessonById
+        )
+    }
     )
 
     val CourseList = Screen(
@@ -112,5 +120,6 @@ private class DefaultDataSource: DataAdapter{
     override fun addNewLesson(courseId: Int) = 0
     override fun changeCourseName(courseId: Int, newName: String) = Unit
     override fun deleteCourse(courseId: Int){}
-    override fun deleteLessson(lessonId: Int) {}
+    override fun deleteLesson(lessonId: Int) {}
+    override fun getLessonById(lessonId: Int): LessonPresentation = LessonPresentation()
 }

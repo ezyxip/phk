@@ -100,9 +100,20 @@ class InMemoryDataSource : DataAdapter {
         courses.remove(targetCourse)
     }
 
-    override fun deleteLessson(lessonId: Int) {
+    override fun deleteLesson(lessonId: Int) {
         val targetLesson = lessons.find { e -> e.id == lessonId } ?: return
         lessons.remove(targetLesson)
+    }
+
+    override fun getLessonById(lessonId: Int): LessonPresentation {
+        return lessons
+            .filter { e -> e.id == lessonId }
+            .map { e -> LessonPresentation(
+                id = e.id,
+                title = e.title,
+                course = e.course.name,
+                date = e.date.toString()
+            ) }.first()
     }
 
     private fun getCourseEntityById(id: Int): Course{
