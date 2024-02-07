@@ -83,7 +83,7 @@ class InMemoryDataSource : DataAdapter {
             course = course
         ))
 
-        return lessons.lastIndex
+        return lessons.last().id
     }
 
     override fun changeCourseName(courseId: Int, newName: String) {
@@ -98,6 +98,11 @@ class InMemoryDataSource : DataAdapter {
     override fun deleteCourse(courseId: Int) {
         val targetCourse = courses.find { e -> e.id == courseId } ?: return
         courses.remove(targetCourse)
+    }
+
+    override fun deleteLessson(lessonId: Int) {
+        val targetLesson = lessons.find { e -> e.id == lessonId } ?: return
+        lessons.remove(targetLesson)
     }
 
     private fun getCourseEntityById(id: Int): Course{

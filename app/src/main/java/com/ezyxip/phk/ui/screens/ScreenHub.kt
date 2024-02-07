@@ -37,7 +37,8 @@ object ScreenHub {
                 getCourseById = dataSource::getCourseById,
                 getLessonsByCourseId = dataSource::getLessonsByCourseId,
                 addNewLesson = dataSource::addNewLesson,
-                changeCourseName = dataSource::changeCourseName
+                changeCourseName = dataSource::changeCourseName,
+                deleteLesson = dataSource::deleteLessson
             )
         }
     )
@@ -111,4 +112,5 @@ private class DefaultDataSource: DataAdapter{
     override fun addNewLesson(courseId: Int) = 0
     override fun changeCourseName(courseId: Int, newName: String) = Unit
     override fun deleteCourse(courseId: Int){}
+    override fun deleteLessson(lessonId: Int) {}
 }

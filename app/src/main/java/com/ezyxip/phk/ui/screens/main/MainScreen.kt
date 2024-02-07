@@ -65,7 +65,7 @@ private fun LastLessonList(
         verticalArrangement = Arrangement.Center
     ) {
         items(lastLessons){
-            LessonCard(modifier, it, onClick = {onCardClick(it.id)})
+            LessonCard(modifier, it, onClick = {onCardClick(it.id)}, isSelected = false)
         }
     }
 }

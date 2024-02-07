@@ -4,8 +4,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,13 +21,16 @@ import com.ezyxip.phk.ui.models.LessonPresentation
 fun LessonCard(
     modifier: Modifier = Modifier,
     lesson: LessonPresentation = LessonPresentation(),
+    isSelected: Boolean = false,
     onClick: () -> Unit = {}
 ){
-    ElevatedCard (
+    val colors = getColorScheme(flag = isSelected)
+    Card (
         modifier = modifier
             .padding(15.dp)
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(6.dp)
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = colors
     ) {
         Column (
             modifier = modifier
@@ -48,6 +53,17 @@ fun LessonCard(
                 text = lesson.date)
         }
     }
+}
+
+@Composable
+private fun getColorScheme(flag: Boolean): CardColors {
+    return if (flag)
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            contentColor = MaterialTheme.colorScheme.inversePrimary
+        )
+    else
+        CardDefaults.cardColors()
 }
 
 @Preview
